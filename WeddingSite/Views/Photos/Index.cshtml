@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Engagement Photos";
+}
+
+@section scripts{
+    <style>
+        #header {
+            background-position: 50% 0%;
+        }
+    </style>
+}
+
+@section bodyscripts{
+<script src="@Url.Content("~/Scripts/angular.js")"></script>
+<script src="https://code.angularjs.org/1.4.1/angular-touch.min.js"></script>
+<script src="https://code.angularjs.org/1.4.1/angular-animate.min.js"></script>
+<script src="@Url.Content("~/Scripts/angular-sanitize.js")"></script>
+<script src="@Url.Content("~/Scripts/angular-ui/ui-bootstrap.js")"></script>
+<script src="@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")"></script>
+<script src="@Url.Content("~/App/Photo/photo.app.js")"></script>
+<script src="@Url.Content("~/App/Photo/photo.service.js")"></script>
+<script src="@Url.Content("~/App/Photo/photo.controller.js")"></script>
+}
+
+<!-- === BEGIN CONTENT === -->
+<div id="content" data-ng-app="wedding.photo" data-ng-controller="PhotoController as ctrl">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <div class="col-md-12">
+                <h2>Engagement Pictures</h2>
+                <p>Photo Credit: <a href="http://www.amberfulbrightphoto.com/">Amber Fulbright Photography</a></p>
+                <!-- Filter Buttons -->
+                @*<div class="portfolio-filter-container margin-top-20">
+                    <ul class="portfolio-filter">
+                        <li class="portfolio-filter-label label label-primary">
+                            filter by:
+                        </li>
+                        <li>
+                            <a href="#" class="portfolio-selected btn btn-default" data-filter="*">All</a>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-default" data-filter=".code">Coding</a>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-default" data-filter=".design">Design</a>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-default" data-filter=".audio">Audio</a>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-default" data-filter=".video">Video</a>
+                        </li>
+                    </ul>
+                </div>*@
+                <!-- End Filter Buttons -->
+            </div>
+        </div>
+        <div class="row portfolio-group">
+            <!-- Portfolio Item -->
+            <div class="portfolio-item col-sm-3 col-xs-6 margin-bottom-40 video" data-ng-repeat="photo in ctrl.photos">
+                @*<a href="#">
+                    <figure class="animate">
+                        <div class="grid-image">
+                            <div class="featured-info">
+                                <div class="info-wrapper">Velit esse molestie</div>
+                            </div>*@
+                <img alt="image1" ng-src="{{photo.thumbImageSrc || '//:0' }}" class="img-responsive" ng-click="ctrl.open($index)" style="min-width: 200px; background: url(/App/Photo/photo.loading.gif) 50% no-repeat; border: 1px solid black; border-radius: 5px;">
+                        @*</div>
+                    </figure>
+                </a>*@
+            </div>
+            <!-- End Portfolio Item -->
+        </div>
+    </div>
+</div>
+<!-- === END CONTENT === -->
+
+<!-- === BEGIN PHOTO CAROUSEL === -->
+@*<script type="text/ng-template" id="template/pic-modal.html">
+    <div class="modal-body">
+        <div class="img-group">
+            <carousel>
+                <slide ng-repeat="photo in photoViewerCtrl.photos" active="photo.active">
+                    <img ng-src="{{photo.imageSrc || '//:0'}}" alt="{{photo.name}}" class="img-responsive pic" />
+                    <div class="carousel-caption">{{thumb.name}}</div>
+                </slide>
+            </carousel>
+            <button type="button" class="close close-lg" ng-click="photoViewerCtrl.ok()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        </div>
+    </div>
+</script>*@
+<!-- === END PHOTO CAROUSEL === -->

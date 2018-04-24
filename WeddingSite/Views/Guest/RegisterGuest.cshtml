@@ -1,0 +1,31 @@
+﻿@model WeddingSite.Models.RegisterGuestViewModel
+
+@{
+    ViewBag.Title = "Register Guest";
+}
+
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Register Box -->
+            <div class="col-md-6 col-md-offset-3 col-sm-offset-3">
+                @using (Html.BeginForm("RegisterGuest", "Guest", FormMethod.Post, new { @class = "signup-page margin-top-20" }))
+                {
+                    <div class="signup-header">
+                        <h2 class="margin-bottom-20">Register Guest Account</h2>
+                    </div>
+                    <label>Guest Code</label>
+                    @Html.TextBoxFor(m => m.GuestCode, new { @class = "form-control margin-bottom-20"})
+                    @Html.ValidationMessageFor(m => m.GuestCode)
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-4 text-right">
+                            <button class="btn btn-primary" type="submit">Register</button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- End Register Box -->
+        </div>
+    </div>
+</div>

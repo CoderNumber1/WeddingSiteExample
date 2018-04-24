@@ -1,0 +1,25 @@
+﻿@model WeddingSite.Models.RsvpViewModel
+
+@{
+    ViewBag.Title = "RSVP Confirmed!";
+}
+
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-9">
+                <!-- Main Content -->
+                <div class="headline">
+                    <h2 class="margin-bottom-20">RSVP Confirmed</h2>
+                </div>
+                <p>
+                    Thanks for your response. @(Model.Attending == true ? "We look forward to seeing you!" : "We're sorry you won't be able to make it.")
+                </p>
+                <br>
+                <!-- Contact Form -->
+            </div>
+            <!-- End Main Column -->
+        </div>
+    </div>
+</div>

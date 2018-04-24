@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Photos Admin";
+}
+
+@section scripts{
+    <style>
+        #header {
+            background-position: 50% 0%;
+        }
+    </style>
+}
+
+@section bodyscripts{
+    <script src="@Url.Content("~/Scripts/angular.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular-ui/uploader.js")"></script>
+    <script src="@Url.Content("~/App/PhotoAdmin/photoAdmin.app.js")"></script>
+    <script src="@Url.Content("~/App/PhotoAdmin/photoAdmin.controller.js")"></script>
+}
+
+<!-- === BEGIN CONTENT === -->
+<div id="content" data-ng-app="wedding.photoAdmin" data-ng-controller="PhotoAdminController as ctrl">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <div class="col-md-12">
+                <h2 class="margin-bottom-20">Photo Admin</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="well">
+                            <div>
+                                <div style="float:right;">
+                                    <button ng-click="btn_upload()">Upload</button>
+                                    <button ng-click="btn_clean()">Remove all</button>
+                                </div>
+                                <input type="file" id="file1" multiple />
+                            </div>
+                            <div ng-repeat="file in files" style="margin-top: 20px;border-bottom-color: antiquewhite;border-bottom-style: double;">
+                                <div>
+                                    <span>{{file.name}}</span><div style="float:right;"><span>{{file.humanSize}}</span><a ng-click="btn_remove(file)" title="Remove from list to be uploaded"><i class="icon-remove"></i></a></div>
+                                </div>
+                                <progress style="width:400px;" value="{{file.loaded}}" max="{{file.size}}"></progress>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- === END CONTENT === -->

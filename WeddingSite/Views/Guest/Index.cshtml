@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container background-white">
+    <div class="row margin-vert-30">
+        <!-- Main Column -->
+        <div class="col-md-12">
+            <!-- Main Content -->
+            <h2 class="text-center article-title">Guest</h2>
+            <p class="text-center">
+                This is where you as a registered guest can get the inside scoop on the wedding. I'll be putting things like venu information, directions, (possibly) video streaming, and anything else you may need. Stay posted.
+            </p>
+            <!-- Contact Form -->
+        </div>
+        <!-- End Main Column -->
+    </div>
+</div>
+<div class="background-white">
+    <div class="container">
+        <div class="row margin-vert-40">
+            <!-- Main Text -->
+            <div class="col-md-12">
+                <h2 class="text-center article-title">Where to Be</h2>
+                <p class="text-center">
+                    The wedding starts at 6:00 PM on the evening of June 27th at the Festivities Event center in El Reno, Ok. The Event Center is located at 220 N Bickford Ave, El Reno, OK 73036. You can search for directions below.
+                </p>
+            </div>
+            <!-- End Main Text -->
+        </div>
+        <div class="row margin-vert-40">
+            <div class="col-md-12">
+                <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.0/mapbox-gl.js'></script>
+                <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.0/mapbox-gl.css' rel='stylesheet' />
+                <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v2.0.0/mapbox-gl-directions.js'></script>
+                <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v2.0.0/mapbox-gl-directions.css' type='text/css' />
+
+                <div id='map' style="height:859px;"></div>
+
+                <script>
+                    mapboxgl.accessToken = 'pk.eyJ1Ijoia2FqYW1lcyIsImEiOiJjaW1taWN6czEwMzlqdTJsdThwdnFoeWVmIn0.MbQzCAH7iV1aDvWBVO-3Bg';
+                    var map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/mapbox/streets-v9',
+                        center: [-97.9534749, 35.5347058],
+                        zoom: 13
+                    });
+
+                    var directions = new mapboxgl.Directions();
+
+                    directions.setDestination('220 N Bickford Ave, El Reno, OK 73036');
+                    //directions.query();
+
+                    map.addControl(directions);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>

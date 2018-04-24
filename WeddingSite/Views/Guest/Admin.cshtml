@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Guest Management";
+}
+
+@section scripts{
+    <style>
+        #header {
+            background-position: 50% 0%;
+        }
+    </style>
+}
+
+@section bodyscripts{
+    <script src="@Url.Content("~/Scripts/lodash.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular.js")"></script>
+    <script src="@Url.Content("~/App/Util/util.module.js")"></script>
+    <script src="@Url.Content("~/App/Util/util.states.js")"></script>
+    <script src="@Url.Content("~/App/Guest/guest.app.js")"></script>
+    <script src="@Url.Content("~/App/Guest/guest.service.js")"></script>
+    <script src="@Url.Content("~/App/Guest/guest.controller.js")"></script>
+}
+
+<!-- === BEGIN CONTENT === -->
+<div id="content" data-ng-app="wedding.guest" data-ng-controller="GuestController as ctrl">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <div class="col-md-12">
+                <h2 class="margin-bottom-20">Guest Management</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="/api/guestapi/guestfile">Download Guest File</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="rsvpOnly">RSVP Only</label>
+                        <input type="checkbox" id="rsvpOnly" data-ng-model="ctrl.rsvpOnly"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @*<form>*@
+                        <div class="form-group">
+                            <label for="newGuestName">Name</label>
+                            <input type="text" class="form-control" id="newGuestName" placeholder="Name" data-ng-model="ctrl.newGuest.name" />
+                        </div>
+                        @*<div class="row">
+                            <div class="col-md-12">
+                                <div class="form-inline">*@
+                        <div class="form-group">
+                            <label for="numberAttendeesAllowed">Attendees Allowed</label>
+                            <input type="number" class="form-control" id="numberAttendeesAllowed" placeholder="# Invited" data-ng-model="ctrl.newGuest.maxAllowed">
+                        </div>
+                        @*<div class="form-group">
+                                            <label class="sr-only" for="exampleInputPassword3">Password</label>
+                                            <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> Remember me
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Sign in</button>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="form-group">
+                            <label for="newGuestAddressOne">Address 1</label>
+                            <input type="text" class="form-control" id="newGuestAddressOne" placeholder="Address One" data-ng-model="ctrl.newGuest.addressOne" />
+                        </div>
+                        <div class="form-group">
+                            <label for="newGuestAddressTwo">Address 2</label>
+                            <input type="text" class="form-control" id="newGuestAddressTwo" placeholder="Address Two" data-ng-model="ctrl.newGuest.addressTwo" />
+                        </div>
+                        <div class="form-group">
+                            <label for="newGuestCity">City</label>
+                            <input type="text" class="form-control" id="newGuestCity" placeholder="City" data-ng-model="ctrl.newGuest.city" />
+                        </div>
+                        <div class="form-group">
+                            <label for="newGuestState">State</label>
+                            <select class="form-control" id="newGuestState" data-ng-model="ctrl.newGuest.state" data-ng-options="item.abbreviation as item.name for item in ctrl.states"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="newGuestZip">Zip</label>
+                            <input type="text" class="form-control" id="newGuestZip" placeholder="Zip" data-ng-model="ctrl.newGuest.country" />
+                        </div>
+
+                        @*<div class=" form-group">
+                                <label for="newGuestGuestCode">Guest Code (Temporary)</label>
+                                <input type="text" class="form-control" id="newGuestGuestCode" placeholder="Guest Code" data-ng-model="ctrl.newGuest.guestCode" />
+                            </div>*@
+                        <button type="submit" class="btn btn-default" data-ng-click="ctrl.addGuest()">Submit</button>
+                        <button type="submit" class="btn btn-default" data-ng-click="ctrl.generateAllGuestCodes()">Generate Codes</button>
+                        @*</form>*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tab-content">
+                            <div class="tab-pane active in fade" id="guest">
+                                <div class="panel-group" id="accordion">
+                                    <!-- guest Item -->
+                                    <div class="panel panel-default panel-guest" data-ng-repeat="guest in ctrl.guests | filter:ctrl.filterRsvps">
+                                        <div class="panel-heading">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="{{'#guest-pend' + $index}}">
+                                                <h4 class="panel-title">
+                                                    {{guest.name}}
+                                                    <span class="pull-right">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </span>
+                                                </h4>
+                                            </a>
+                                        </div>
+                                        <div id="{{'guest-pend' + $index}}" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <label for="{{'guest-name-' + $index}}">Name:</label>
+                                                    <input id="{{'guest-name-' + $index}}" data-ng-model="guest.name" class="form-control" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{'guest-numberAttendeesAllowed' + $index}}">Attendees Allowed</label>
+                                                    <input type="number" class="form-control" id="{{'guest-numberAttendeesAllowed' + $index}}" placeholder="# Invited" data-ng-model="guest.maxAllowed">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{'guest-AddressOne' + $index}}">Address 1</label>
+                                                    <input type="text" class="form-control" id="{{'guest-AddressOne' + $index}}" placeholder="Address One" data-ng-model="guest.addressOne" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{'guest-AddressOne' + $index}}">Address 2</label>
+                                                    <input type="text" class="form-control" id="{{'guest-AddressOne' + $index}}" placeholder="Address Two" data-ng-model="guest.addressTwo" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{'guest-City' + $index}}">City</label>
+                                                    <input type="text" class="form-control" id="{{'guest-City' + $index}}" placeholder="City" data-ng-model="guest.city" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{'guest-State' + $index}}">State</label>
+                                                    <select class="form-control" id="{{'guest-State' + $index}}" data-ng-model="guest.state" data-ng-options="item.abbreviation as item.name for item in ctrl.states"></select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{'guest-Zip' + $index}}">Zip</label>
+                                                    <input type="text" class="form-control" id="{{'guest-Zip' + $index}}" placeholder="Zip" data-ng-model="guest.country" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{'guest-guest-code' + $index}}">Guest Codes</label>
+                                                    <ul>
+                                                        <li data-ng-repeat="guestCode in guest.guestCodes">{{guestCode.guestCode1}}</li>
+                                                    </ul>
+                                                    @*<input type="text" class="form-control" id="{{'guest-guest-code' + $index}}" placeholder="Guest Code" data-ng-model="guest.guestCode" />*@
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{'guest-rsvp' + $index}}">RSVP</label>
+                                                    <input type="checkbox" class="form-control" id="{{'guest-rsvp' + $index}}" data-ng-model="guest.rsvpFlag" />
+                                                    <input type="text" class="form-control" id="{{'guest-number-attending' + $index}}" placeholder="Number Attending" data-ng-model="guest.numberAttending" />
+                                                </div>
+                                                <button data-ng-click="ctrl.genrateGuestCode(guest)" type="button" class="btn btn-primary btn-sm">Generate Code</button>
+                                                <button data-ng-click="ctrl.updateGuest(guest)" type="button" class="btn btn-primary btn-sm">Update</button>
+                                                <button data-ng-click="ctrl.deleteGuest(guest)" type="button" class="btn btn-sm">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End guest Item -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- === END CONTENT === -->

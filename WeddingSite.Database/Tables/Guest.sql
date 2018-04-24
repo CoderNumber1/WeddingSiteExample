@@ -1,0 +1,23 @@
+﻿CREATE TABLE [dbo].[Guest](
+	[GuestId] [int] IDENTITY(1,1) NOT NULL,
+	[GuestCode] [varchar](50) NOT NULL,
+	[Name] [varchar](250) NOT NULL,
+	[RSVPFlag] [bit] NOT NULL,
+	[MaxAllowed] [int] NOT NULL,
+	[NumberAttending] [int] NOT NULL,
+	[Invited] BIT NOT NULL DEFAULT(0),
+	[AddressOne] VARCHAR(500) NULL,
+	[AddressTwo] VARCHAR(500) NULL,
+	[City] VARCHAR(250) NULL,
+	[State] CHAR(2) NULL,
+	[Country] VARCHAR(250) NULL,
+	[DriveFromMailTo] BIT NOT NULL DEFAULT(1),
+	[DriveFromAddressOne] VARCHAR(500) NULL,
+	[DriveFromAddressTwo] VARCHAR(500) NULL,
+	[DriveFromCity] VARCHAR(250) NULL,
+	[DriveFromState] CHAR(2) NULL,
+	[DriveFromCountry] VARCHAR(250) NULL,
+	[SaveDateSent] BIT NOT NULL DEFAULT(0),
+	[InvitationSent] BIT NOT NULL DEFAULT(0),
+ CONSTRAINT [PK_GUEST] PRIMARY KEY CLUSTERED ([GuestId] ASC)
+)
